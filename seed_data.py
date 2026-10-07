@@ -1,3 +1,5 @@
+"""Script to seed the database with sample authors and books via HTTP POST requests."""
+
 import requests
 
 BASE_URL = "http://127.0.0.1:5000"
@@ -123,26 +125,34 @@ books_data = [
 
 
 def seed_database():
-  print("--- Füge Autoren hinzu ---")
-  for author in authors_data:
-    response = requests.post(f"{BASE_URL}/add_author", data=author)
-    if response.status_code in (200, 201):
-      print(f"✅ Autor hinzugefügt: {author['name']}")
-    else:
-      print(
-          f"❌ Fehler bei Autor {author['name']}: Status {response.status_code}"
-      )
+    """Send requests to backend API endpoints to populate database."""
+    print("--- Füge Autoren hinzu ---")
+    for author in authors_data:
+        response = requests.post(
+            f"{BASE_URL}/add_author",
+            data=author,
+            timeout=10)
+        if response.status_code in (200, 201):
+            print(f"✅ Autor hinzugefügt: {author['name']}")
+        else:
+            print(
+                f"❌ Fehler bei Autor {
+                    author['name']}: Status {
+                    response.status_code}"
+            )
 
-  print("\n--- Füge Bücher hinzu ---")
-  for book in books_data:
-    response = requests.post(f"{BASE_URL}/add_book", data=book)
-    if response.status_code in (200, 201):
-      print(f"✅ Buch hinzugefügt: {book['title']}")
-    else:
-      print(
-          f"❌ Fehler bei Buch {book['title']}: Status {response.status_code}"
-      )
+    print("\n--- Füge Bücher hinzu ---")
+    for book in books_data:
+        response = requests.post(f"{BASE_URL}/add_book", data=book, timeout=10)
+        if response.status_code in (200, 201):
+            print(f"✅ Buch hinzugefügt: {book['title']}")
+        else:
+            print(
+                f"❌ Fehler bei Buch {
+                    book['title']}: Status {
+                    response.status_code}"
+            )
 
 
 if __name__ == "__main__":
-  seed_database()
+    seed_database()

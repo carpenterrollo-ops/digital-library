@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Autor hinzufügen - Digital Library{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-xl">
+    <h2 class="text-2xl font-bold mb-6 text-amber-400">Neuen Autor hinzufügen ✍️</h2>
+
+    {% if success_message %}
+        <div class="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm">
+            {{ success_message }}
+        </div>
+    {% endif %}
+
+    <form action="/add_author" method="POST" class="space-y-4">
+        <div>
+            <label for="name" class="block text-sm font-medium text-slate-300 mb-1">Name des Autors</label>
+            <input type="text" id="name" name="name" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-amber-400">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label for="birthdate" class="block text-sm font-medium text-slate-300 mb-1">Geburtsdatum</label>
+                <input type="date" id="birthdate" name="birthdate" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-amber-400">
+            </div>
+
+            <div>
+                <label for="date_of_death" class="block text-sm font-medium text-slate-300 mb-1">Todesdatum (Optional)</label>
+                <input type="date" id="date_of_death" name="date_of_death" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-amber-400">
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-slate-700 hover:bg-slate-600 text-slate-100 font-bold py-3 px-4 rounded-xl transition mt-4">
+            Autor speichern
+        </button>
+    </form>
+</div>
+{% endblock %}

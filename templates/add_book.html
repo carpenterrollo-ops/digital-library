@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Buch hinzufügen - Digital Library{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-xl">
+    <h2 class="text-2xl font-bold mb-6 text-amber-400">Neues Buch hinzufügen 📖</h2>
+
+    {% if success_message %}
+        <div class="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm">
+            {{ success_message }}
+        </div>
+    {% endif %}
+
+    <form action="/add_book" method="POST" class="space-y-4">
+        <div>
+            <label for="title" class="block text-sm font-medium text-slate-300 mb-1">Buchtitel</label>
+            <input type="text" id="title" name="title" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-amber-400">
+        </div>
+
+        <div>
+            <label for="author_id" class="block text-sm font-medium text-slate-300 mb-1">Autor auswählen</label>
+            <select id="author_id" name="author_id" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-amber-400">
+                {% for author in authors %}
+                    <option value="{{ author.author_id }}">{{ author.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label for="publication_year" class="block text-sm font-medium text-slate-300 mb-1">Erscheinungsjahr</label>
+                <input type="text" id="publication_year" name="publication_year" required placeholder="z.B. 1997" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-amber-400">
+            </div>
+
+            <div>
+                <label for="isbn" class="block text-sm font-medium text-slate-300 mb-1">ISBN</label>
+                <input type="text" id="isbn" name="isbn" required placeholder="978..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:border-amber-400">
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 px-4 rounded-xl transition mt-4">
+            Buch speichern
+        </button>
+    </form>
+</div>
+{% endblock %}

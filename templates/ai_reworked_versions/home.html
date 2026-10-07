@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Meine Bibliothek</title>
+</head>
+<body>
+
+    <h1>Willkommen in der Bibliothek 📚</h1>
+
+    <!-- Erfolgs- und Flash-Meldungen anzeigen -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div style="padding: 10px; background-color: #d4edda; color: #155724; border-radius: 4px; margin-bottom: 15px;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <hr>
+
+    <!-- Buchliste -->
+    {% if books %}
+        {% for book in books %}
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+
+                <!-- Buch-Details mit Cover -->
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <img
+                        src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg"
+                        alt="Cover von {{ book.title }}"
+                        style="width: 80px; height: auto; object-fit: cover; border-radius: 4px;"
+                    >
+                    <div>
+                        <h3 style="margin: 0 0 5px 0;">{{ book.title }}</h3>
+                        <p style="margin: 0;"><strong>Autor:</strong> {{ book.author.name }}</p>
+                        <p style="margin: 0;"><strong>Jahr:</strong> {{ book.publication_year }} | <strong>ISBN:</strong> {{ book.isbn }}</p>
+                    </div>
+                </div>
+
+                <!-- Löschen-Button (POST-Formular) -->
+                <form action="{{ url_for('delete_book', book_id=book.book_id) }}" method="POST" onsubmit="return confirm('Möchtest du dieses Buch wirklich löschen?');">
+                    <button type="submit" style="background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">
+                        Löschen 🗑️
+                    </button>
+                </form>
+
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>Keine Bücher vorhanden.</p>
+    {% endif %}
+
+</body>
+</html>

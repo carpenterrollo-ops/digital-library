@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Digital Library{% endblock %}</title>
+    <!-- Tailwind CSS per CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation -->
+    <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <a href="/" class="text-2xl font-bold text-amber-400 flex items-center gap-2">
+                📚 Digital Library
+            </a>
+            <nav class="flex gap-3">
+                <a href="/" class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-700 transition">Startseite</a>
+                <a href="/add_book" class="px-3 py-2 rounded-lg text-sm font-medium bg-amber-500 hover:bg-amber-600 text-slate-900 transition font-semibold">+ Buch hinzufügen</a>
+                <a href="/add_author" class="px-3 py-2 rounded-lg text-sm font-medium bg-slate-700 hover:bg-slate-600 transition">+ Autor hinzufügen</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full">
+        <!-- Flash-Nachrichten -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="mb-6 p-4 rounded-xl border bg-emerald-500/10 border-emerald-500/30 text-emerald-300 flex justify-between items-center">
+                <span>{{ message }}</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 text-center py-6 text-slate-500 text-sm">
+        &copy; Digital Library App &bull; Flask & SQLAlchemy
+    </footer>
+
+</body>
+</html>
